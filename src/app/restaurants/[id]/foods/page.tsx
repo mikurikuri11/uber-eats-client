@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 
 import { getRestaurantFoods } from '@/features/foods/api/foodAPI';
 import { getAllRestaurants } from '@/features/restaurants/api/restaurantAPI';
