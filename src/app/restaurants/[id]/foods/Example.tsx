@@ -1,40 +1,9 @@
-"use client";
-
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import Image from 'next/image';
-import { useState } from 'react';
+import { CheckIcon } from '@heroicons/react/24/outline'
 
-import { Food } from '@/features/foods/types'
-import CountUpButton from '@/components/elements/CountUpButton';
-import CountDownButton from '@/components/elements/CountDownButton';
-
-interface FoodModalProps {
-  food: Food | null;
-  open: boolean;
-  setOpen: (value: boolean) => void;
-}
-
-export default function FoodModal({
-  open,
-  setOpen,
-  food,
-}: FoodModalProps) {
-
-  const [countNumber, setCountNumber] = useState(0);
-
-  const onClickCountUp = () => {
-    setCountNumber(countNumber + 1);
-  }
-
-  const onClickCountDown = () => {
-    setCountNumber(countNumber - 1);
-  }
-
-  const onClickOrder = () => {
-    setCountNumber(0);
-    setOpen(false);
-  }
+export default function Example() {
+  const [open, setOpen] = useState(true)
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -64,28 +33,17 @@ export default function FoodModal({
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
                 <div>
+                  <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
+                    <CheckIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
+                  </div>
                   <div className="mt-3 text-center sm:mt-5">
-                    <div className='px-4'>
-                      <Image
-                        src={`https://source.unsplash.com/collection/1346951/800x400?sig=${food?.id}0`}
-                        alt="food"
-                        width={600}
-                        height={400}
-                        className="h-32 w-16 lg:h-full lg:w-full rounded-lg object-cover object-center"
-                        />
-                    </div>
-                      <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900 mt-4">
-                        {food?.name}
-                      </Dialog.Title>
+                    <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
+                      Payment successful
+                    </Dialog.Title>
                     <div className="mt-2">
                       <p className="text-sm text-gray-500">
-                        {food?.description}
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur amet labore.
                       </p>
-                    </div>
-                    <div className='mt-4 flex justify-center items-center'>
-                      <CountUpButton countNumber={countNumber} onClickCountUp={onClickCountUp} />
-                      <p className='font-bold mx-2'>{countNumber}</p>
-                      <CountDownButton countNumber={countNumber} onClickCountDown={onClickCountDown} />
                     </div>
                   </div>
                 </div>
@@ -93,9 +51,9 @@ export default function FoodModal({
                   <button
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    onClick={() => onClickOrder()}
+                    onClick={() => setOpen(false)}
                   >
-                    {`${countNumber}点を注文に追加 ￥${(food?.price ?? 0) * countNumber}`}
+                    Go back to dashboard
                   </button>
                 </div>
               </Dialog.Panel>
