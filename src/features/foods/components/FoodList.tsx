@@ -25,7 +25,11 @@ const FoodList = ({ foods }: FoodListProps) => {
       {foods.map((food) => (
         <FoodCard food={food} key={food.id} onClickFoods={onClickFoods} />
       )) }
-      <FoodModal open={open} setOpen={setOpen} food={selectedFood} />
+      <FoodModal
+        open={open}
+        setOpen={setOpen}
+        food={selectedFood}
+        />
     </>
   )
 }

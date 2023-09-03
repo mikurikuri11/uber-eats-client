@@ -28,7 +28,7 @@ const FoodCard = ({ food, onClickFoods }: FoodCardProps) => {
                 {food.name}
               </h3>
             </div>
-            <p className="text-sm font-medium text-gray-900">{food.price}</p>
+            <p className="text-sm font-medium text-gray-900">￥{food.price}</p>
           </div>
         </div>
     </div>
