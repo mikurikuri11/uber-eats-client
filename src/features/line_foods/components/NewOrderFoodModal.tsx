@@ -3,45 +3,30 @@
 import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import Image from 'next/image';
-import { useState } from 'react';
-import { useRecoilState } from 'recoil'
-
 
 import { Food } from '@/features/foods/types'
 import CountUpButton from '@/components/elements/CountUpButton';
 import CountDownButton from '@/components/elements/CountDownButton';
-import { eachTodoCountState } from '@/recoil/atoms/eachTodoCountState';
 
 interface FoodModalProps {
   food: Food | null;
   open: boolean;
   setOpen: (value: boolean) => void;
+  foodCount: number;
+  existingRestaurantName: string // 他店舗の名前
+  newRestaurantName: string     // いま選択した店舗の名前
+  onClickSubmit: () => void;
 }
 
 export default function FoodModal({
   open,
   setOpen,
   food,
+  foodCounts,
+  existingRestaurantName,
+  newRestaurantName,
+  onClickSubmit,
 }: FoodModalProps) {
-
-  // const [countNumber, setCountNumber] = useState(0);
-  const [eachTodoCount, setEachTodoCount] = useRecoilState(eachTodoCountState(food?.id));
-
-  const onClickCountUp = () => {
-    setEachTodoCount(eachTodoCount + 1);
-  }
-
-  const onClickCountDown = () => {
-    if (eachTodoCount > 0) {
-      setEachTodoCount(eachTodoCount - 1);
-    }
-  }
-
-  const onClickOrder = () => {
-    setEachTodoCount(0);
-    setOpen(false);
-  }
-
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -82,17 +67,20 @@ export default function FoodModal({
                         />
                     </div>
                       <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900 mt-4">
-                        {food?.name}
+                        新規注文を開始しますか？
                       </Dialog.Title>
                     <div className="mt-2">
                       <p className="text-sm text-gray-500">
-                        {food?.description}
+                      {
+                        `ご注文に ${existingRestaurantName} の商品が含まれています。
+                        新規の注文を開始して ${newRestaurantName} の商品を追加してください。`
+                      }
                       </p>
                     </div>
                     <div className='mt-4 flex justify-center items-center'>
-                      <CountUpButton eachTodoCount={eachTodoCount} onClickCountUp={onClickCountUp} />
-                      <p className='font-bold mx-2'>{eachTodoCount}</p>
-                      <CountDownButton eachTodoCount={eachTodoCount} onClickCountDown={onClickCountDown} />
+                      {/* <CountUpButton countNumber={countNumber} /> */}
+                      <p className='font-bold mx-2'>{foodCounts}</p>
+                      {/* <CountDownButton countNumber={countNumber} /> */}
                     </div>
                   </div>
                 </div>
@@ -100,9 +88,8 @@ export default function FoodModal({
                   <button
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    onClick={() => onClickOrder()}
                   >
-                    {`${eachTodoCount}点を注文に追加 ￥${(food?.price ?? 0) * eachTodoCount}`}
+                    {`${foodCounts}点を注文に追加 ￥${(food?.price ?? 0) * foodCounts}`}
                   </button>
                 </div>
               </Dialog.Panel>
