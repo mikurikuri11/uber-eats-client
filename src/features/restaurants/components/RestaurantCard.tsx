@@ -2,11 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { Restaurant } from '@/features/restaurants/types'
-
-interface RestaurantCardProps {
-  restaurant: Restaurant
-}
+import { RestaurantCardProps } from '@/features/restaurants/types'
 
 const RestaurantCard = ({ restaurant }: RestaurantCardProps) => {
   return (

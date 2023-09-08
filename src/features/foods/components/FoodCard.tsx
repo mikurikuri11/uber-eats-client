@@ -1,17 +1,12 @@
 import React from 'react'
 import Image from 'next/image'
 
-import { Food } from '@/features/foods/types'
-
-interface FoodCardProps {
-  food: Food;
-  onClickFoods: (id: string) => void;
-}
+import { FoodCardProps } from '@/features/foods/types'
 
 const FoodCard = ({ food, onClickFoods }: FoodCardProps) => {
   return (
     <div>
-      <div key={food.id} className="group relative" onClick={() => onClickFoods(food.id)}>
+      <div key={food.id} className="group relative" onClick={() => onClickFoods(food.id)} >
           <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
           <Image
               src={`https://source.unsplash.com/collection/1346951/1000x500?sig=${food.id}0`}

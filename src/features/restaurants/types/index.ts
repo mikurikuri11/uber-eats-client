@@ -6,3 +6,11 @@ export type Restaurant = {
   created_at: string;
   updated_at: string;
 };
+
+export interface RestaurantCardProps {
+  restaurant: Restaurant
+}
+
+export interface RestaurantListProps {
+  restaurants: Restaurant[];
+}

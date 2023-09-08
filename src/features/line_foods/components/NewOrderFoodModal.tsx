@@ -1,36 +1,36 @@
-import { Fragment, ReactElement, Dispatch, SetStateAction } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
+"use client";
+
+import { Fragment } from 'react'
+import { Dialog, Transition } from '@headlessui/react'
 import Image from 'next/image';
 
+import { Food } from '@/features/foods/types'
 import CountUpButton from '@/components/elements/CountUpButton';
 import CountDownButton from '@/components/elements/CountDownButton';
 
-import { useEachFoodCount } from '@/features/foods/fooks/useEachFoodCount';
-import { useClickOrder } from '@/features/foods/fooks/useClickOrder';
-import { FoodModalProps, ClickOrderResultProps } from '@/features/foods/types';
+interface FoodModalProps {
+  food: Food | null;
+  open: boolean;
+  setOpen: (value: boolean) => void;
+  // foodCount: number;
+  // existingRestaurantName: string // 他店舗の名前
+  // newRestaurantName: string     // いま選択した店舗の名前
+  // onClickSubmit: () => void;
+}
 
 export default function FoodModal({
   open,
   setOpen,
   food,
-}: FoodModalProps): ReactElement {
-  const foodId = food?.id ?? '';
-  const { eachFoodCount, increment, decrement, reset } = useEachFoodCount(foodId);
-
-  const {
-    isLoading,
-    success,
-    error,
-    onClickOrder,
-  }: ClickOrderResultProps = useClickOrder(foodId, eachFoodCount, setOpen);
-
-  const onClickCountUp = () => increment();
-
-  const onClickCountDown = () => decrement();
+  // foodCounts,
+  // existingRestaurantName,
+  // newRestaurantName,
+  // onClickSubmit,
+}: FoodModalProps) {
 
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={() => setOpen(false)}>
+      <Dialog as="div" className="relative z-10" onClose={setOpen}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -64,20 +64,23 @@ export default function FoodModal({
                         width={600}
                         height={400}
                         className="h-32 w-16 lg:h-full lg:w-full rounded-lg object-cover object-center"
-                      />
+                        />
                     </div>
-                    <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900 mt-4">
-                      {food?.name}
-                    </Dialog.Title>
+                      <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900 mt-4">
+                        新規注文を開始しますか？
+                      </Dialog.Title>
                     <div className="mt-2">
                       <p className="text-sm text-gray-500">
-                        {food?.description}
+                      {
+                        `ご注文に 1 の商品が含まれています。
+                        新規の注文を開始して 1 の商品を追加してください。`
+                      }
                       </p>
                     </div>
                     <div className='mt-4 flex justify-center items-center'>
-                      <CountUpButton eachFoodCount={eachFoodCount} onClickCountUp={onClickCountUp} />
-                      <p className='font-bold mx-2'>{eachFoodCount}</p>
-                      <CountDownButton eachFoodCount={eachFoodCount} onClickCountDown={onClickCountDown} />
+                      {/* <CountUpButton countNumber={countNumber} /> */}
+                      <p className='font-bold mx-2'>1</p>
+                      {/* <CountDownButton countNumber={countNumber} /> */}
                     </div>
                   </div>
                 </div>
@@ -85,17 +88,9 @@ export default function FoodModal({
                   <button
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    onClick={onClickOrder}
-                    disabled={isLoading}
                   >
-                    {isLoading ? '注文中...' : `${eachFoodCount}点を注文に追加 ￥${(food?.price ?? 0) * eachFoodCount}`}
+                    {`1点を注文に追加 ￥${(food?.price ?? 0) * 1}`}
                   </button>
-                  {success && (
-                    <p className="text-green-600 mt-2">注文が成功しました。</p>
-                  )}
-                  {error && (
-                    <p className="text-red-600 mt-2">エラーが発生しました。</p>
-                  )}
                 </div>
               </Dialog.Panel>
             </Transition.Child>
@@ -105,4 +100,3 @@ export default function FoodModal({
     </Transition.Root>
   )
 }
-
