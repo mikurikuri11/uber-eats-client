@@ -12,20 +12,20 @@ interface FoodModalProps {
   food: Food | null;
   open: boolean;
   setOpen: (value: boolean) => void;
-  foodCount: number;
-  existingRestaurantName: string // 他店舗の名前
-  newRestaurantName: string     // いま選択した店舗の名前
-  onClickSubmit: () => void;
+  // foodCount: number;
+  // existingRestaurantName: string // 他店舗の名前
+  // newRestaurantName: string     // いま選択した店舗の名前
+  // onClickSubmit: () => void;
 }
 
 export default function FoodModal({
   open,
   setOpen,
   food,
-  foodCounts,
-  existingRestaurantName,
-  newRestaurantName,
-  onClickSubmit,
+  // foodCounts,
+  // existingRestaurantName,
+  // newRestaurantName,
+  // onClickSubmit,
 }: FoodModalProps) {
 
   return (
@@ -72,14 +72,14 @@ export default function FoodModal({
                     <div className="mt-2">
                       <p className="text-sm text-gray-500">
                       {
-                        `ご注文に ${existingRestaurantName} の商品が含まれています。
-                        新規の注文を開始して ${newRestaurantName} の商品を追加してください。`
+                        `ご注文に 1 の商品が含まれています。
+                        新規の注文を開始して 1 の商品を追加してください。`
                       }
                       </p>
                     </div>
                     <div className='mt-4 flex justify-center items-center'>
                       {/* <CountUpButton countNumber={countNumber} /> */}
-                      <p className='font-bold mx-2'>{foodCounts}</p>
+                      <p className='font-bold mx-2'>1</p>
                       {/* <CountDownButton countNumber={countNumber} /> */}
                     </div>
                   </div>
@@ -89,7 +89,7 @@ export default function FoodModal({
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
-                    {`${foodCounts}点を注文に追加 ￥${(food?.price ?? 0) * foodCounts}`}
+                    {`1点を注文に追加 ￥${(food?.price ?? 0) * 1}`}
                   </button>
                 </div>
               </Dialog.Panel>

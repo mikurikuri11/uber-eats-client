@@ -1,12 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 
-import { Food } from '@/features/foods/types'
-
-interface FoodCardProps {
-  food: Food;
-  onClickFoods: (id: string) => void;
-}
+import { FoodCardProps } from '@/features/foods/types'
 
 const FoodCard = ({ food, onClickFoods }: FoodCardProps) => {
   return (

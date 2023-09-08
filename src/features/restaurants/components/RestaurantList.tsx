@@ -1,11 +1,9 @@
 import React from 'react';
 
-import { Restaurant } from '@/features/restaurants/types';
 import RestaurantCard from './RestaurantCard';
+import { RestaurantListProps } from '@/features/restaurants/types';
 
-interface RestaurantListProps {
-  restaurants: Restaurant[];
-}
+
 
 const RestaurantList = ({ restaurants }: RestaurantListProps) => {
   return (

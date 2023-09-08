@@ -3,21 +3,19 @@
 import React from 'react'
 import { useState } from 'react'
 
-import { Food } from '@/features/foods/types'
 import FoodCard from './FoodCard';
 import FoodModal from './FoodModal';
-import { useSelectFood } from '../fooks/useSelectUser';
+import NewOrderFoodModal from '@/features/line_foods/components/NewOrderFoodModal';
 
-interface FoodListProps {
-  foods: Food[];
-}
+import { useOpenModal } from '../fooks/useOpenModal';
+import { FoodListProps } from '@/features/foods/types';
 
 const FoodList = ({ foods }: FoodListProps) => {
   const [open, setOpen] = useState(false);
-  const { selectedFood, onSelectFood } = useSelectFood();
+  const { selectedFood, openFoodModal } = useOpenModal();
 
   const onClickFoods = (id: string) => {
-    onSelectFood({ id, foods, setOpen });
+    openFoodModal({ id, foods, setOpen });
   }
 
   return (
@@ -30,6 +28,15 @@ const FoodList = ({ foods }: FoodListProps) => {
         setOpen={setOpen}
         food={selectedFood}
         />
+      {/* <NewOrderFoodModal
+        food={selectedFood}
+        open={open}
+        setOpen={setOpen}
+        // foodCount={selectedFood?.count || 0}
+        // existingRestaurantName={selectedFood?.restaurant_name || ''}
+        // newRestaurantName={selectedFood?.restaurant_name || ''}
+        // onClickSubmit={() => console.log('onClickSubmit')}
+      /> */}
     </>
   )
 }

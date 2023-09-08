@@ -1,51 +1,36 @@
-"use client";
-
-import { Fragment } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
+import { Fragment, ReactElement, Dispatch, SetStateAction } from 'react';
+import { Dialog, Transition } from '@headlessui/react';
 import Image from 'next/image';
-import { useState } from 'react';
-import { useRecoilState } from 'recoil'
 
-
-import { Food } from '@/features/foods/types'
 import CountUpButton from '@/components/elements/CountUpButton';
 import CountDownButton from '@/components/elements/CountDownButton';
-import { eachTodoCountState } from '@/recoil/atoms/eachTodoCountState';
 
-interface FoodModalProps {
-  food: Food | null;
-  open: boolean;
-  setOpen: (value: boolean) => void;
-}
+import { useEachFoodCount } from '@/features/foods/fooks/useEachFoodCount';
+import { useClickOrder } from '@/features/foods/fooks/useClickOrder';
+import { FoodModalProps, ClickOrderResultProps } from '@/features/foods/types';
 
 export default function FoodModal({
   open,
   setOpen,
   food,
-}: FoodModalProps) {
+}: FoodModalProps): ReactElement {
+  const foodId = food?.id ?? '';
+  const { eachFoodCount, increment, decrement, reset } = useEachFoodCount(foodId);
 
-  // const [countNumber, setCountNumber] = useState(0);
-  const [eachTodoCount, setEachTodoCount] = useRecoilState(eachTodoCountState(food?.id));
+  const {
+    isLoading,
+    success,
+    error,
+    onClickOrder,
+  }: ClickOrderResultProps = useClickOrder(foodId, eachFoodCount, setOpen);
 
-  const onClickCountUp = () => {
-    setEachTodoCount(eachTodoCount + 1);
-  }
+  const onClickCountUp = () => increment();
 
-  const onClickCountDown = () => {
-    if (eachTodoCount > 0) {
-      setEachTodoCount(eachTodoCount - 1);
-    }
-  }
-
-  const onClickOrder = () => {
-    setEachTodoCount(0);
-    setOpen(false);
-  }
-
+  const onClickCountDown = () => decrement();
 
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={setOpen}>
+      <Dialog as="div" className="relative z-10" onClose={() => setOpen(false)}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -79,20 +64,20 @@ export default function FoodModal({
                         width={600}
                         height={400}
                         className="h-32 w-16 lg:h-full lg:w-full rounded-lg object-cover object-center"
-                        />
+                      />
                     </div>
-                      <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900 mt-4">
-                        {food?.name}
-                      </Dialog.Title>
+                    <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900 mt-4">
+                      {food?.name}
+                    </Dialog.Title>
                     <div className="mt-2">
                       <p className="text-sm text-gray-500">
                         {food?.description}
                       </p>
                     </div>
                     <div className='mt-4 flex justify-center items-center'>
-                      <CountUpButton eachTodoCount={eachTodoCount} onClickCountUp={onClickCountUp} />
-                      <p className='font-bold mx-2'>{eachTodoCount}</p>
-                      <CountDownButton eachTodoCount={eachTodoCount} onClickCountDown={onClickCountDown} />
+                      <CountUpButton eachFoodCount={eachFoodCount} onClickCountUp={onClickCountUp} />
+                      <p className='font-bold mx-2'>{eachFoodCount}</p>
+                      <CountDownButton eachFoodCount={eachFoodCount} onClickCountDown={onClickCountDown} />
                     </div>
                   </div>
                 </div>
@@ -100,10 +85,17 @@ export default function FoodModal({
                   <button
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    onClick={() => onClickOrder()}
+                    onClick={onClickOrder}
+                    disabled={isLoading}
                   >
-                    {`${eachTodoCount}点を注文に追加 ￥${(food?.price ?? 0) * eachTodoCount}`}
+                    {isLoading ? '注文中...' : `${eachFoodCount}点を注文に追加 ￥${(food?.price ?? 0) * eachFoodCount}`}
                   </button>
+                  {success && (
+                    <p className="text-green-600 mt-2">注文が成功しました。</p>
+                  )}
+                  {error && (
+                    <p className="text-red-600 mt-2">エラーが発生しました。</p>
+                  )}
                 </div>
               </Dialog.Panel>
             </Transition.Child>
@@ -113,3 +105,4 @@ export default function FoodModal({
     </Transition.Root>
   )
 }
+

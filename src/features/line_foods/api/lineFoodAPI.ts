@@ -2,7 +2,7 @@ import NotFound from "@/app/not-found";
 import { LineFood } from "../types";
 import { lineFoods } from "@/url";
 
-export const createLineFood = async (id: string, count: number): Promise<LineFood[]> => {
+export const createLineFood = async (id: string , count: number): Promise<LineFood[]> => {
 
   const currentDateTime = new Date().toISOString();
 
@@ -20,7 +20,6 @@ export const createLineFood = async (id: string, count: number): Promise<LineFoo
 
   if (!response.ok) {
     const errorMessage = await response.text();
-    console.error(`Error: ${errorMessage}`);
     throw new Error(errorMessage);
   }
 
