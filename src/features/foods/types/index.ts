@@ -12,9 +12,15 @@ export type Food = {
 
 export interface FoodModalProps {
   food: Food | null;
-  open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
+  showFoodModal: boolean;
+  setShowFoodModal: Dispatch<SetStateAction<boolean>>;
 }
+
+export interface ConfirmFoodModalProps {
+  showConfirmModal: boolean;
+  setShowConfirmModal: Dispatch<SetStateAction<boolean>>;
+}
+
 
 export interface ClickOrderResultProps {
   isLoading: boolean;

@@ -10,8 +10,8 @@ import { useClickOrder } from '@/features/foods/fooks/useClickOrder';
 import { FoodModalProps, ClickOrderResultProps } from '@/features/foods/types';
 
 export default function FoodModal({
-  open,
-  setOpen,
+  showFoodModal,
+  setShowFoodModal,
   food,
 }: FoodModalProps): ReactElement {
   const foodId = food?.id ?? '';
@@ -22,15 +22,15 @@ export default function FoodModal({
     success,
     error,
     onClickOrder,
-  }: ClickOrderResultProps = useClickOrder(foodId, eachFoodCount, setOpen);
+  }: ClickOrderResultProps = useClickOrder(foodId, eachFoodCount, setShowFoodModal);
 
   const onClickCountUp = () => increment();
 
   const onClickCountDown = () => decrement();
 
   return (
-    <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={() => setOpen(false)}>
+    <Transition.Root show={showFoodModal} as={Fragment}>
+      <Dialog as="div" className="relative z-10" onClose={() => setShowFoodModal(false)}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -90,12 +90,6 @@ export default function FoodModal({
                   >
                     {isLoading ? '注文中...' : `${eachFoodCount}点を注文に追加 ￥${(food?.price ?? 0) * eachFoodCount}`}
                   </button>
-                  {success && (
-                    <p className="text-green-600 mt-2">注文が成功しました。</p>
-                  )}
-                  {error && (
-                    <p className="text-red-600 mt-2">エラーが発生しました。</p>
-                  )}
                 </div>
               </Dialog.Panel>
             </Transition.Child>
