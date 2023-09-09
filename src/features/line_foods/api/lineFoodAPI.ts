@@ -1,5 +1,5 @@
 import { LineFood } from "../types";
-import { lineFoods } from "@/url";
+import { lineFoods, lineFoodsReplace } from "@/url";
 
 export const createLineFood = async (id: string , count: number): Promise<LineFood[]> => {
 
@@ -30,7 +30,7 @@ export const replaceLineFood = async (id: string, count: number): Promise<LineFo
 
   const currentDateTime = new Date().toISOString();
 
-  const response = await fetch(lineFoods, {
+  const response = await fetch(lineFoodsReplace, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -44,8 +44,7 @@ export const replaceLineFood = async (id: string, count: number): Promise<LineFo
 
   if (!response.ok) {
     const errorMessage = await response.text();
-    console.error(`Error: ${errorMessage}`);
-    throw new Error(errorMessage);
+    return Promise.reject(new Error(errorMessage));
   }
 
   const data = await response.json();

@@ -17,16 +17,23 @@ export interface FoodModalProps {
 }
 
 export interface ConfirmFoodModalProps {
+  food: Food | null;
   showConfirmModal: boolean;
   setShowConfirmModal: Dispatch<SetStateAction<boolean>>;
 }
-
 
 export interface ClickOrderResultProps {
   isLoading: boolean;
   success: boolean;
   error: Error | null;
   onClickOrder: () => Promise<void>;
+}
+
+export interface ClickReplaceOrderResultProps {
+  isLoading: boolean;
+  success: boolean;
+  error: Error | null;
+  onClickReplaceOrder: () => Promise<void>;
 }
 
 export interface FoodListProps {

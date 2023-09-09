@@ -4,12 +4,24 @@ import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { CheckIcon, ExclamationTriangleIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
-import { ConfirmFoodModalProps } from '@/features/foods/types';
+import { useEachFoodCount } from '@/features/foods/fooks/useEachFoodCount';
+import { ConfirmFoodModalProps, ClickReplaceOrderResultProps } from '@/features/foods/types';
+import { useClickReplaceOrder } from '@/features/foods/fooks/useClickReplaceOrder';
 
 export default function ConfirmFoodModal({
     showConfirmModal,
     setShowConfirmModal,
+    food,
   }: ConfirmFoodModalProps): React.ReactElement {
+    const foodId = food?.id ?? '';
+    const { eachFoodCount } = useEachFoodCount(foodId);
+
+    const {
+      isLoading,
+      success,
+      error,
+      onClickReplaceOrder,
+    }: ClickReplaceOrderResultProps = useClickReplaceOrder(foodId, eachFoodCount, setShowConfirmModal);
 
   return (
     <Transition.Root show={showConfirmModal} as={Fragment}>
@@ -49,8 +61,8 @@ export default function ConfirmFoodModal({
                     <div className="mt-2">
                       <p className="text-sm text-gray-500">
                         {
-                          `ご注文に test の商品が含まれています。
-                          新規の注文を開始して test の商品を追加してください。`
+                          `ご注文に existingResutaurautName の商品が含まれています。
+                          新規の注文を開始して newResutaurautName の商品を追加してください。`
                         }
                       </p>
                     </div>
@@ -63,6 +75,13 @@ export default function ConfirmFoodModal({
                     onClick={() => setShowConfirmModal(false)}
                   >
                     買い物を続ける
+                  </button>
+                  <button
+                    type="button"
+                    className="mt-3 inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    onClick={() => onClickReplaceOrder()}
+                  >
+                    新規注文を開始する
                   </button>
                 </div>
               </Dialog.Panel>
