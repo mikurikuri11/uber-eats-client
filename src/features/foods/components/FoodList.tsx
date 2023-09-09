@@ -42,6 +42,7 @@ const FoodList = ({ foods }: FoodListProps) => {
       <NewOrderConfirmModal
         showConfirmModal={showConfirmModal}
         setShowConfirmModal={() => setShowConfirmModal(false)}
+        food={selectedFood}
       />
     </>
   )
