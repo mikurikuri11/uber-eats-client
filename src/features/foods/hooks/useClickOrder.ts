@@ -6,6 +6,7 @@ import { createLineFood } from '@/features/line_foods/api/lineFoodAPI';
 import { ClickOrderResultProps } from '@/features/foods/types';
 import { showConfirmModalAtom } from '@/recoil/atoms/showConfirmModalAtom';
 import { showFoodModalAtom } from '@/recoil/atoms/showFoodModalAtom';
+import { useEachFoodCount } from './useEachFoodCount';
 
 export function useClickOrder(
   foodId: string,
@@ -18,7 +19,7 @@ export function useClickOrder(
   const router = useRouter();
   const setShowConfirmModal = useSetRecoilState(showConfirmModalAtom);
   const setShowFoodModal = useSetRecoilState(showFoodModalAtom);
-
+  const { reset } = useEachFoodCount(foodId);
 
   const onClickOrder = async (): Promise<void> => {
 
@@ -28,6 +29,7 @@ export function useClickOrder(
       await createLineFood(foodId, eachFoodCount);
       setSuccess(true);
       setOpen(false);
+      reset();
       router.push('/orders');
       router.refresh();
       console.log('Success: create line food');

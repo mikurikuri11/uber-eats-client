@@ -5,8 +5,8 @@ import Image from 'next/image';
 import CountUpButton from '@/components/elements/CountUpButton';
 import CountDownButton from '@/components/elements/CountDownButton';
 
-import { useEachFoodCount } from '@/features/foods/fooks/useEachFoodCount';
-import { useClickOrder } from '@/features/foods/fooks/useClickOrder';
+import { useEachFoodCount } from '@/features/foods/hooks/useEachFoodCount';
+import { useClickOrder } from '@/features/foods/hooks/useClickOrder';
 import { FoodModalProps, ClickOrderResultProps } from '@/features/foods/types';
 
 export default function FoodModal({
@@ -15,7 +15,7 @@ export default function FoodModal({
   food,
 }: FoodModalProps): ReactElement {
   const foodId = food?.id ?? '';
-  const { eachFoodCount, increment, decrement, reset } = useEachFoodCount(foodId);
+  const { eachFoodCount, increment, decrement } = useEachFoodCount(foodId);
 
   const {
     isLoading,
