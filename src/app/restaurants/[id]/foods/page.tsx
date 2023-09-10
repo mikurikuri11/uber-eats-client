@@ -3,7 +3,6 @@ import React from 'react';
 import { getRestaurantFoods } from '@/features/foods/api/foodAPI';
 import { getAllRestaurants } from '@/features/restaurants/api/restaurantAPI';
 import FoodList from '@/features/foods/components/FoodList';
-// import Example from './Example';
 
 interface FoodProps {
   params: {
@@ -24,7 +23,6 @@ const Food = async ({ params }: FoodProps) => {
 
         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
           <FoodList foods={foods} />
-          {/* <Example /> */}
         </div>
       </div>
     </div>

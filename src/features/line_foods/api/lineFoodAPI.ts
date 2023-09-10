@@ -1,5 +1,6 @@
 import { LineFood } from "../types";
 import { lineFoods, lineFoodsReplace } from "@/url";
+import NotFound from "@/app/not-found";
 
 export const createLineFood = async (id: string , count: number): Promise<LineFood[]> => {
 
@@ -50,3 +51,18 @@ export const replaceLineFood = async (id: string, count: number): Promise<LineFo
   const data = await response.json();
   return data.foods;
 }
+
+export const fetchLineFoods = async (): Promise<LineFood> => {
+  const response = await fetch(lineFoods, {
+    cache: "no-store"
+  });
+
+  if(response.status === 404) NotFound();
+
+  if (!response.ok) {
+    throw new Error("Something went wrong");
+  }
+
+  const data = await response.json();
+  return data;
+};

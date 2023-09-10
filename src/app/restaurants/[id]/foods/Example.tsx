@@ -1,3 +1,5 @@
+// このコンポーネントを消すと、モーダルのレイアウトが崩れる。理由は不明。
+
 import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/24/outline'

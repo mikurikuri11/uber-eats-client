@@ -4,9 +4,9 @@ import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { CheckIcon, ExclamationTriangleIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
-import { useEachFoodCount } from '@/features/foods/fooks/useEachFoodCount';
+import { useEachFoodCount } from '@/features/foods/hooks/useEachFoodCount';
 import { ConfirmFoodModalProps, ClickReplaceOrderResultProps } from '@/features/foods/types';
-import { useClickReplaceOrder } from '@/features/foods/fooks/useClickReplaceOrder';
+import { useClickReplaceOrder } from '@/features/foods/hooks/useClickReplaceOrder';
 
 export default function ConfirmFoodModal({
     showConfirmModal,
