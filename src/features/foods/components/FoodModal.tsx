@@ -15,7 +15,7 @@ export default function FoodModal({
   food,
 }: FoodModalProps): ReactElement {
   const foodId = food?.id ?? '';
-  const { eachFoodCount, increment, decrement, reset } = useEachFoodCount(foodId);
+  const { eachFoodCount, increment, decrement } = useEachFoodCount(foodId);
 
   const {
     isLoading,

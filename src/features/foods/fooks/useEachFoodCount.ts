@@ -9,13 +9,13 @@ export function useEachFoodCount(foodId: string) {
   };
 
   const decrement = () => {
-    if (eachFoodCount > 0) {
+    if (eachFoodCount > 1) {
       setEachFoodCount(eachFoodCount - 1);
     }
   };
 
   const reset = () => {
-    setEachFoodCount(0);
+    setEachFoodCount(1);
   }
 
   return {

@@ -5,6 +5,7 @@ import { useSetRecoilState } from 'recoil';
 import { replaceLineFood } from '@/features/line_foods/api/lineFoodAPI';
 import { ClickReplaceOrderResultProps } from '@/features/foods/types';
 import { showConfirmModalAtom } from '@/recoil/atoms/showConfirmModalAtom';
+import { useEachFoodCount } from './useEachFoodCount';
 
 export function useClickReplaceOrder(
   foodId: string,
@@ -16,6 +17,7 @@ export function useClickReplaceOrder(
   const [success, setSuccess] = useState<boolean>(false);
   const router = useRouter();
   const setShowConfirmModal = useSetRecoilState(showConfirmModalAtom);
+  const { reset } = useEachFoodCount(foodId);
 
   const onClickReplaceOrder = async (): Promise<void> => {
 
@@ -25,6 +27,7 @@ export function useClickReplaceOrder(
       await replaceLineFood(foodId, eachFoodCount);
       setSuccess(true);
       setOpen(false);
+      reset();
       router.push('/orders');
       router.refresh();
       console.log('Success: create line food');
