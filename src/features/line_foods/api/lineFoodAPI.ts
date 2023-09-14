@@ -1,5 +1,5 @@
 import { LineFood } from "../types";
-import { lineFoods, lineFoodsReplace } from "@/url";
+import { lineFoods, lineAllFoods, lineFoodsReplace } from "@/url";
 import NotFound from "@/app/not-found";
 
 export const createLineFood = async (id: string , count: number): Promise<LineFood[]> => {
