@@ -1,27 +1,40 @@
-"use client"
+"use client";
 
-import { useState } from 'react'
-import { Dialog } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import Image from 'next/image'
-import Link from 'next/link'
+import { useState } from "react";
+import { Dialog } from "@headlessui/react";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
+import Link from "next/link";
+
+import LoginButton from "../elements/LoginButton";
+import LogoutButton from "../elements/LogoutButton";
+import { useSession, signIn } from 'next-auth/react';
+
 
 const navigation = [
-  { name: 'Home', href: '/' },
-  { name: 'Shops', href: '/' },
-  { name: 'Cart', href: '/orders' },
-]
+  { name: "Home", href: "/" },
+  { name: "Shops", href: "/" },
+  { name: "Cart", href: "/orders" },
+];
 
 export default function Example() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { data: session, status } = useSession();
 
   return (
     <header className="bg-white">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
+      <nav
+        className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+        aria-label="Global"
+      >
         <div className="flex flex-1">
           <div className="hidden lg:flex lg:gap-x-12">
             {navigation.map((item) => (
-              <Link key={item.name} href={item.href} className="text-sm font-semibold leading-6 text-gray-900">
+              <Link
+                key={item.name}
+                href={item.href}
+                className="text-sm font-semibold leading-6 text-gray-900"
+              >
                 {item.name}
               </Link>
             ))}
@@ -39,21 +52,31 @@ export default function Example() {
         </div>
         <Link href="#" className="-m-1.5 p-1.5">
           <span className="sr-only">Your Company</span>
-          <Image
+          {/* <Image
             className="h-8 w-auto"
             src=""
             width={32}
             height={32}
             alt=""
-          />
+          /> */}
         </Link>
         <div className="flex flex-1 justify-end">
-          <Link href="#" className="text-sm font-semibold leading-6 text-gray-900">
+          {/* <Link href="#" className="text-sm font-semibold leading-6 text-gray-900">
             Log in <span aria-hidden="true">&rarr;</span>
-          </Link>
+          </Link> */}
+          {status === "authenticated" ? (
+            <LogoutButton />
+          ) : (
+            <LoginButton />
+          )}
         </div>
       </nav>
-      <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
+      <Dialog
+        as="div"
+        className="lg:hidden"
+        open={mobileMenuOpen}
+        onClose={setMobileMenuOpen}
+      >
         <div className="fixed inset-0 z-10" />
         <Dialog.Panel className="fixed inset-y-0 left-0 z-10 w-full overflow-y-auto bg-white px-6 py-6">
           <div className="flex items-center justify-between">
@@ -69,18 +92,18 @@ export default function Example() {
             </div>
             <Link href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
-              <Image
+              {/* <Image
                 className="h-8 w-auto"
                 src=""
                 width={32}
                 height={32}
                 alt=""
-              />
+              /> */}
             </Link>
             <div className="flex flex-1 justify-end">
-              <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+              {/* <Link href="#" className="text-sm font-semibold leading-6 text-gray-900">
                 Log in <span aria-hidden="true">&rarr;</span>
-              </a>
+              </Link> */}
             </div>
           </div>
           <div className="mt-6 space-y-2">
@@ -97,5 +120,5 @@ export default function Example() {
         </Dialog.Panel>
       </Dialog>
     </header>
-  )
+  );
 }
