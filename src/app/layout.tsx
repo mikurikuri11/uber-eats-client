@@ -5,6 +5,7 @@ import { Inter } from 'next/font/google'
 import Header from '@/components/layouts/Header'
 import Footer from '@/components/layouts/Footer'
 import RecoilProvider from '@/recoil/Provider'
+import NextAuthProvider from '@/providers/NextAuth'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,11 +22,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <RecoilProvider>
-          <Header />
-            {children}
-          <Footer />
-        </RecoilProvider>
+        <NextAuthProvider>
+          <RecoilProvider>
+            <Header />
+              {children}
+            <Footer />
+          </RecoilProvider>
+        </NextAuthProvider>
       </body>
     </html>
   )
